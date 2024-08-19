@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+
+<html lang="vi-VN">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/LogIn.css" />
+    <title></title>
+    <script type="text/javascript" src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    @{ var admin = Session["Admin"] as WebsiteCoffee.Models.TaiKhoan; }
+    @{ var user = Session["User"] as WebsiteCoffee.Models.TaiKhoan; }
+    @{ var u = Session["use"] as WebsiteCoffee.Models.TaiKhoan; }
+    <div id="header">
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Danh sách nước uống</a>
+                            <ul class="dropdown-menu" id="drop">
+                                <li><a class="dropdown-item" href="/DanhSachSp/CaPhe">Cà phê</a></li>
+                                <li><a class="dropdown-item" href="/DanhSachSp/Tra">Trà</a></li>
+                                <li><a class="dropdown-item" href="/DanhSachSp/Nuocep">Nước ép</a></li>
+                                <li><a class="dropdown-item" href="/DanhSachSp/Daxay">Đá xay</a></li>
+                                <li><a class="dropdown-item" href="/DanhSachSp/Sinhto">Sinh tố</a></li>
+                            </ul>
+                        </li>
+                        @{ if (admin == null)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Liên hệ</a>
+                                    <ul class="dropdown-menu" id="drop">
+                                        <li><a class="dropdown-item" href="mailto:2033216341@hufi.edu.vn">Email</a></li>
+
+                                        <li><a class="dropdown-item" href="/Account/DonHang">Thông tin đơn hàng</a></li>
+
+
+
+
+
+
+                                    </ul>
+                                </li>
+                            }
+                        }
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="/Home/Gioithieu">Giới thiệu</a>
+                            </li>*@
+
+
+                        @{if (admin != null)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Quản lý</a>
+                                    <ul class="dropdown-menu" id="drop">
+                                        <li><a class="dropdown-item" href="/Admin/Index">Thêm sản phẩm</a></li>
+                                        <li><a class="dropdown-item" href="/Admin/XoaSp">Xóa sản phẩm</a></li>
+                                        <li><a class="dropdown-item" href="/Admin/SuaSp">Sửa sản phẩm</a></li>
+                                        <li><a class="dropdown-item" href="/Admin/XemDonHang">Xem đơn hàng</a></li>
+                                        <li><a class="dropdown-item" href="/Admin/XemPhanHoi">Xem phản hồi</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Account/ThongTinNguoiDung/@admin.MaTaiKhoan">Xin chào: @admin.HoTen</a>
+                                </li>
+
+
+                                <li class="nav-item" style="padding-left:30px">
+                                    <a class="nav-link" href="/Account/DangXuat">Đăng xuất</a>
+                                </li>
+                            }
+
+                        }
+                        @if (admin == null)
+                        {
+                            <li class="nav-item" style="padding-left:30px">
+                                <a class="nav-link" href="/GioHang/GioHang">Giỏ hàng</a>
+                            </li>
+                        }
+
+                        @{if (user != null)
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Account/ThongTinNguoiDung/@user.MaTaiKhoan">Xin chào: @user.HoTen</a>
+                                </li>
+
+                                <li class="nav-item" style="padding-left:30px">
+                                    <a class="nav-link" href="/Account/DangXuat">Đăng xuất</a>
+                                </li>
+                            }
+
+                        }
+
+                    </ul>
+                    @RenderSection("search", required: false)
+                    @RenderSection("LogIn", required: false)
+
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+
+
+
+
+
+
+</body>
+</html>

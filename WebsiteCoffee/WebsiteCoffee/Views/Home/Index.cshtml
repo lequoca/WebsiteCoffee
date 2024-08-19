@@ -1,0 +1,89 @@
+﻿@model List<WebsiteCoffee.Models.SanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Shared/Layout.cshtml";
+}
+@{ var admin = Session["Admin"] as WebsiteCoffee.Models.TaiKhoan; }
+@{ var user = Session["User"] as WebsiteCoffee.Models.TaiKhoan; }
+@section LogIn
+{
+    @{ if (admin == null && user == null)
+        {
+            <form>
+                <a href="/Account/DangNhap"><button class="btn btn-primary" type="button">Đăng Nhập</button></a>
+                <a href="/Account/DangKy"><button class="btn btn-primary" type="button">Đăng Ký</button></a>
+            </form>
+        }
+    }
+
+}
+
+
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://katinat.vn/wp-content/uploads/2023/12/KAT_NEWBRANDING_COVERFB_3-scaled.jpg" class="d-block w-100 h-25" alt="Yaw" />
+        </div>
+        <div class="carousel-item">
+            <img src="https://katinat.vn/wp-content/uploads/2024/04/KAT_BANNER-WEB_CPPM.jpg" class="d-block w-100 h-25" alt="...">
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+
+        </button>
+
+        @*@RenderSection("LogIn", required: false)*@
+
+    </div>
+
+
+
+
+    @section search
+{
+        <form class="d-flex" id="search" action="/Home/@ViewBag.Title">
+            <input class="form-control me-2" type="search" id="search" name="search" placeholder="Search">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    }
+    <div class="container-fluid" style="margin-top:10px">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <a href="/Admin/Chitiet/@item.MaSanPham">
+                            <center>
+                                <img src=@Url.Content(item.HinhAnh.ToString()) class="img-responsive" alt="" width="200" height="150" />
+                            </center>
+                        </a>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h5 class="fw-bolder">@item.TenSanPham</h5>
+                                Giá: @String.Format("{0:0,0}", @item.Gia) VND
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMaSP = item.MaSanPham, @strURL = Request.Url.ToString() }))
+                                {
+                                    <input type="submit" value="Thêm vào giỏ hàng" id="bgnGioHang" class="btn btn-outline-dark mt-auto" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
